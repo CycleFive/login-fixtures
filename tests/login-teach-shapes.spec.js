@@ -116,7 +116,8 @@ test.describe('SHA-256 login', () => {
     await open(page, serverURL, '/login/transformed.html');
     await page.fill('#username', 'whoever');
     await page.fill('#password', 'hunter22');
-    await page.evaluate(() => document.getElementById('login-form').submit());
+    // The button's id="submit" shadows form.submit, so call the method itself.
+    await page.evaluate(() => HTMLFormElement.prototype.submit.call(document.getElementById('login-form')));
     await page.waitForURL(serverURL + '/login/transformed.html?error=not_digest');
     await page.waitForSelector('#login-form[data-ready="true"]');
     await expect(page.locator('#login-status')).toHaveAttribute('data-state', 'error');
