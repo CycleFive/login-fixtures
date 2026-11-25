@@ -241,7 +241,12 @@
         (function () {
             'use strict';
             // Fixed allowlist: the "from" value is only a key, never rendered.
-            var TARGETS = { strict: '/login.html', any: '/login/any.html' };
+            var TARGETS = {
+                strict: '/login.html',
+                any: '/login/any.html',
+                'two-step': '/login/two-step.html',
+                transformed: '/login/transformed.html'
+            };
             var from = new URLSearchParams(location.search).get('from');
             var href = (from !== null && Object.prototype.hasOwnProperty.call(TARGETS, from)) ? TARGETS[from] : '/login.html';
             document.getElementById('logout').setAttribute('href', href);

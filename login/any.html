@@ -275,7 +275,17 @@
             var form = document.getElementById('login-form');
             var fieldset = form.querySelector('fieldset');
             var username = document.getElementById('username');
-            var password = document.getElementById('password');
+            var password = form.querySelector('input[type="password"]');
+
+            // ?drift=password renames the password field (id and name become
+            // "passwd") before the form is enabled. The path stays /login/any.html,
+            // so a method recorded on the plain page meets a changed field.
+            if (new URLSearchParams(location.search).get('drift') === 'password') {
+                password.id = 'passwd';
+                password.name = 'passwd';
+                form.querySelector('label[for="password"]').htmlFor = 'passwd';
+                form.setAttribute('data-drift', 'password');
+            }
             var status = document.getElementById('login-status');
             var statusText = document.getElementById('login-status-text');
             var report = document.getElementById('fill-report');

@@ -30,16 +30,21 @@ for the mechanism and the measured Chrome storage results.
 | `/login/any.html` | Form POST, accept-any: any non-empty pair | Redirect to `/login/welcome.html` |
 | `/login/spa.html` | Script POST (`fetch()` of JSON), accept-any | Form removed, URL changed by `history.pushState` |
 | `/login/spa-keep.html` | Script POST, accept-any | Form stays filled, URL unchanged |
+| `/login/two-step.html` → `/login/two-step-password.html` | Form POST in two steps: username alone, then password alone, accept-any | Redirect to `/login/welcome.html` |
+| `/login/transformed.html` | Form POST of the password's SHA-256 (the page swaps it in on submit), accept-any | Redirect to `/login/welcome.html` |
+| `/login/any.html?drift=password` | `/login/any.html` with the password field renamed to `passwd` (id and name), same path | None: the worker reads `password`, so it ends at `?error=missing` |
 | `/login/welcome.html` | Landing page, no credential fields | |
 
-Planned for kharon's teach-mode live test (kharon #383): a two-step login, a
-page that sends the SHA-256 of the password in place of the password, and a
-drift variant of `/login/any.html` with the password field renamed.
+The last three were added for kharon's teach-mode live test (kharon #383):
+`two_step` with `password_leg: form_post`, `transformed { digest: "sha256" }`,
+and a drift case for a method recorded on `/login/any.html`.
 
 ## Selectors and receipts
 
 - Public test pair: `testuser` / `correct-horse-battery-staple`.
 - Fields: `#login-form`, `#username`, `#password`, `#submit`.
+  The two-step pages have one field each: `#username` on step 1, `#password`
+  on step 2, which also shows `#step-report[data-username-length]`.
 - `#login-status[data-state]`: `idle`, `error` or `not_ready` on the login
   pages; `success` on the welcome page and on `spa-keep.html` after a login.
 - `#fill-report`: live character counts (`data-username-length`,
