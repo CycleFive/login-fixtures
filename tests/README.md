@@ -12,9 +12,7 @@ Playwright (chromium) tests for the static pages and service worker.
 port) and `requestLog` (array of `{method, url}` the server received during
 that test).
 
-`write-config.test.sh` is a separate bash test for `scripts/write-config.sh`.
-
-`tests/` is excluded from the GitHub Pages artifact (see `.github/workflows/pages.yml`).
+`tests/` is not part of the GitHub Pages artifact: the workflow copies only the pages (see `.github/workflows/pages.yml`), and runs this suite before every deploy.
 
 ## storage-control.mjs
 

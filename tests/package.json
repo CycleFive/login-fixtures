@@ -1,5 +1,5 @@
 {
-  "name": "public-oauth-test-e2e",
+  "name": "login-fixtures-e2e",
   "private": true,
   "scripts": {
     "test": "playwright test"
