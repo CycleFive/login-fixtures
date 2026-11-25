@@ -5,7 +5,7 @@ test.describe('login/about.html', () => {
     const res = await page.goto(serverURL + '/login/about.html');
     expect(res.status()).toBe(200);
     const rows = page.locator('table#variants tr');
-    for (const url of ['/login.html', '/login/any.html', '/login/spa.html', '/login/spa-keep.html']) {
+    for (const url of ['/login.html', '/login/any.html', '/login/spa.html', '/login/spa-keep.html', '/login/two-step.html', '/login/transformed.html', '/login/any.html?drift=password']) {
       await expect(rows.filter({ hasText: url }).first()).toBeVisible();
     }
   });
